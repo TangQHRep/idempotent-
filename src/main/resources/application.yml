@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: idempotent
+  redis:
+    host: 121.41.167.75
+    port: 11428
 
 #Redisson单机配置
 singleServerConfig:

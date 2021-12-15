@@ -11,11 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
+
+import com.idempotent.service.TokenService;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.Redisson;
 import org.redisson.api.RMapCache;
@@ -51,6 +50,10 @@ public class IdempotentAspect {
 
     @Autowired
     private Redisson redisson;
+
+    @Autowired
+    private TokenService tokenService;
+
 
 
 
@@ -151,4 +154,13 @@ public class IdempotentAspect {
     }
 
     //TODO 基于token的幂等验证待编写
+
+
+    @Around(value = "@annotation(com.idempotent.annotation.TokenIdempotent)")
+    public void beforePointTokenCut(JoinPoint joinPoint)throws Exception{
+        ServletRequestAttributes requestAttributes =
+                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        tokenService.checkToken(request);
+    }
 }
