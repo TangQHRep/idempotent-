@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    private static final String TOKEN_NAME = "token";
+    private static final String TOKEN_NAME = "idempotent";
 
 
     @Autowired
@@ -32,7 +32,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public ServerResponse createToken() {
         //这里通过UUID来生成token
-        String tokenValue = "idempotent:token:" + UUID.randomUUID().toString();
+        String tokenValue = "idempotent:" + UUID.randomUUID().toString();
         //将token放入redis中，设置有效期为60S
         stringRedisTemplate.opsForValue().set(tokenValue, "0", 60, TimeUnit.SECONDS);
         return ServerResponse.success(tokenValue);

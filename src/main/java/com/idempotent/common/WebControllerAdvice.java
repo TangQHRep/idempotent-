@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author： Tangqh
  * @version： 1.0.0
  * @createTime： 2021年12月15日
- * @功能描述： 同一异常处理
+ * @功能描述： 全局异常处理
  */
 @Slf4j
 @ControllerAdvice
@@ -27,7 +27,7 @@ public class WebControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ServerResponse exceptionHandler(Exception e) {
         log.error("Exception: ", e);
-        return ServerResponse.error(ResponseCode.SERVER_ERROR.getMsg());
+        return ServerResponse.error(ResponseCode.SERVER_ERROR);
     }
 
 }

@@ -64,4 +64,6 @@ public @interface Idempotent {
      * @return
      */
     boolean haveIp() default false;
+
+    //TODO 可以自定义实现个性内容，不断优化补充
 }

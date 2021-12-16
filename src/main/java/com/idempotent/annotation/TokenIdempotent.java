@@ -16,4 +16,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TokenIdempotent {
+
+    //TODO 可以自定义实现个性内容，不断优化补充
 }
